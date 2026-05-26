@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo"> Веломагазин</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="orders.html">Мои заказы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Корзина</h1>
+
+        <div id="cartItems" class="cart-items">
+            <!-- Товары в корзине будут здесь -->
+        </div>
+
+        <div id="cartSummary" class="cart-summary">
+            <h3>Итого: <span id="totalPrice">0</span> ₽</h3>
+            <button onclick="checkout()" class="btn-primary" id="checkoutBtn">Оформить заказ</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+        });
+    </script>
+</body>
+
+</html>

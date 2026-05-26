@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Веломагазин - Главная</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Веломагазин</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="orders.html">Мои заказы</a></li>
+            </ul>
+            <div class="auth-buttons" id="authButtons">
+                <button onclick="showLoginModal()">Вход</button>
+                <button onclick="showRegisterModal()">Регистрация</button>
+            </div>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <span id="userName"></span>
+                <button onclick="logout()">Выйти</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Добро пожаловать в Веломагазин</h1>
+            <p>Лучшие велосипеды по лучшим ценам!</p>
+            <a href="catalog.html" class="btn-primary">Перейти в каталог</a>
+        </section>
+
+        <section class="features">
+            <div class="feature">
+                <h3>Широкий выбор</h3>
+                <p>Горные, гибридные велосипеды</p>
+            </div>
+            <div class="feature">
+                <h3>Лучшие цены</h3>
+                <p>Прямые поставки от производителей</p>
+            </div>
+            <div class="feature">
+                <h3>Быстрая доставка</h3>
+                <p>По всей России</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Вход</h2>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <input type="text" id="regFullName" placeholder="ФИО" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <input type="password" id="regPassword" placeholder="Пароль" required>
+                <input type="tel" id="regPhone" placeholder="Телефон">
+                <input type="text" id="regAddress" placeholder="Адрес">
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

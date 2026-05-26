@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товар - Веломагазин</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Веломагазин</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="orders.html">Мои заказы</a></li>
+            </ul>
+            <div class="cart-icon">
+                Корзина <span id="cartCount">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="productDetail" class="product-detail">
+            <div class="loading">Загрузка...</div>
+        </div>
+    </main>
+
+    <style>
+        .product-detail {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .product-content {
+            display: flex;
+            gap: 2rem;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .product-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-info h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-brand {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e67e22;
+            margin: 1rem 0;
+        }
+
+        .product-stock {
+            color: #27ae60;
+            margin-bottom: 1rem;
+        }
+
+        .product-description {
+            line-height: 1.6;
+            color: #34495e;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 1rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-add:hover {
+            background: #2980b9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .product-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script src="script.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        async function loadProductDetail() {
+            const container = document.getElementById('productDetail');
+            if (!productId) {
+                container.innerHTML = '<div class="loading">Товар не найден</div>';
+                return;
+            }
+
+            try {
+                const product = await apiRequest(`/products/${productId}`);
+
+                const imageUrl = 'test.png';
+
+                container.innerHTML = `
+                    <a href="catalog.html" class="back-link">Назад к каталогу</a>
+                    <div class="product-content">
+                        <div class="product-image">
+                            <img src="${imageUrl}" 
+                                 alt="${product.name}"
+                                 onclick="window.open(this.src, '_blank')">
+                            <p style="text-align: center; margin-top: 0.5rem; color: #7f8c8d; font-size: 0.8rem;">
+                                Нажмите на картинку для увеличения
+                            </p>
+                        </div>
+                        <div class="product-info">
+                            <h1>${product.name}</h1>
+                            <div class="product-brand">Бренд: ${product.brand}</div>
+                            <div class="product-price">${product.price.toLocaleString()} руб.</div>
+                            <div class="product-stock">В наличии: ${product.stock_quantity} шт.</div>
+                            <div class="product-description">
+                                <strong>Подробное описание:</strong><br><br>
+                                ${product.description || 'Описание отсутствует'}
+                            </div>
+                            <button class="btn-add" onclick="addToCartAndGoBack(${product.id}, '${product.name}', ${product.price})">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Ошибка:', error);
+                container.innerHTML = '<div class="loading">Ошибка загрузки товара</div>';
+            }
+        }
+
+        function addToCartAndGoBack(productId, name, price) {
+            addToCart(productId, name, price);
+            setTimeout(() => {
+                window.location.href = 'catalog.html';
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            loadProductDetail();
+        });
+    </script>
+</body>
+
+</html>

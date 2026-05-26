@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог велосипедов</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Веломагазин</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="cart.html">Корзина</a></li>
+                <li><a href="orders.html">Мои заказы</a></li>
+            </ul>
+            <div class="cart-icon">
+                Корзина <span id="cartCount">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Каталог велосипедов</h1>
+
+        <div class="filters">
+            <select id="filterType" onchange="loadProducts()">
+                <option value="">Все типы</option>
+                <option value="mountain">Горные (MTB)</option>
+                <option value="hybrid">Гибридные</option>
+            </select>
+            <select id="filterBrand" onchange="loadProducts()">
+                <option value="">Все бренды</option>
+            </select>
+            <input type="number" id="minPrice" placeholder="Цена от" onchange="loadProducts()">
+            <input type="number" id="maxPrice" placeholder="Цена до" onchange="loadProducts()">
+        </div>
+
+        <div id="productsList" class="products-grid">
+            <div class="loading">Загрузка...</div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBrands();
+            loadProducts();
+            updateCartCount();
+        });
+    </script>
+</body>
+
+</html>
